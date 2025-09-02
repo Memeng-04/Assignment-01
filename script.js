@@ -83,7 +83,7 @@ nameOptionSelect.addEventListener('change', () => {
 // Open modal
 function openModal(index) {
   const user = users[index];
-  selectedIndex = index;cd
+  selectedIndex = index;
 
   userImage.src = user.picture.large;
   modalName.textContent = `${user.name.title} ${user.name.first} ${user.name.last}`;
