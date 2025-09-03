@@ -48,7 +48,7 @@ generateButton.addEventListener('click', async () => {
   }
 });
 
-// Render table function (so we can refresh after edits)
+// Render table function  refresh after edits
 function renderTable(nameOption) {
   tableBody.innerHTML = '';
   if (users.length === 0) {
