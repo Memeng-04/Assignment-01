@@ -34,7 +34,7 @@ generateButton.addEventListener('click', async () => {
   generateButton.disabled = true;
 
   try {
-    const response = await fetch(`https://randomuser.me/api/?results=${count}`);
+    const response = await fetch(`http://localhost:3000/api?results=${count}`);
     const data = await response.json();
     users = data.results;
 
