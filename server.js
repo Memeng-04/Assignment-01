@@ -1,36 +1,30 @@
+// server.js
 import express from "express";
 import cors from "cors";
-import fetch from "node-fetch"; // make sure to install: npm install node-fetch
+import fetch from "node-fetch"; // npm install node-fetch
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.use(cors());
 
-// Store users in memory
-let storedUsers = [];
-
-// Fetch from Random User API
+// Helper function to fetch users from Random User API
 async function fetchUsers(count) {
   const response = await fetch(`https://randomuser.me/api/?results=${count}`);
   const data = await response.json();
   return data.results;
 }
 
-// API route
+// API route: /api?results=NUMBER
 app.get("/api", async (req, res) => {
   try {
+    // Parse the requested number of users
     const results = Math.min(Math.max(parseInt(req.query.results) || 1, 1), 1000);
 
-    // If not enough cached, fetch new users from real API
-    if (storedUsers.length < results) {
-      const newUsers = await fetchUsers(results);
-      storedUsers = storedUsers.concat(newUsers);
-    }
+    // Fetch fresh users
+    const users = await fetchUsers(results);
 
-    // Slice the amount requested
-    res.json({ results: storedUsers.slice(0, results) });
-
+    res.json({ results: users });
   } catch (err) {
     console.error("Error fetching users:", err);
     res.status(500).json({ error: "Failed to fetch users" });
